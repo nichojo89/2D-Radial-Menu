@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="SkiaSharp" Version="2.80.3" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="2.80.3" />
+    <PackageReference Include="SkiaSharp.Extended.Iconify.FontAwesome" Version="5.0.0" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="1.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Pickers\" />
+    <None Remove="SkiaSharp" />
+    <None Remove="SkiaSharp.Views.Forms" />
+    <None Remove="ViewModel\" />
+    <None Remove="SkiaSharp.Extended.Iconify.FontAwesome" />
+    <None Remove="Fonts\" />
+    <None Remove="Fonts\Font-Awesome-Brands-Regular.otf" />
+    <None Remove="Fonts\Font-Awesome-Regular.otf" />
+    <None Remove="Fonts\Font-Awesome-Solid.otf" />
+    <None Remove="Xamarin.CommunityToolkit" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pickers\" />
+    <Folder Include="ViewModel\" />
+    <Folder Include="Fonts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Fonts\Font-Awesome-Brands-Regular.otf" />
+    <EmbeddedResource Include="Fonts\Font-Awesome-Regular.otf" />
+    <EmbeddedResource Include="Fonts\Font-Awesome-Solid.otf" />
+  </ItemGroup>
+</Project>
