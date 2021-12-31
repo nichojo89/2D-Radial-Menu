@@ -21,6 +21,28 @@ namespace RadialMenuSkia.Pickers
             set => SetValue(ItemSourceProperty, value);
         }
 
+        public static readonly BindableProperty DiameterProperty = BindableProperty.Create(nameof(Diameter),
+            typeof(int),
+            typeof(RadialMenu),
+            80);
+
+        public int Diameter
+        {
+            get => (int)GetValue(DiameterProperty);
+            set => SetValue(DiameterProperty, value);
+        }
+
+        public static readonly BindableProperty ArcLengthProperty = BindableProperty.Create(nameof(ArcLength),
+            typeof(int),
+            typeof(RadialMenu),
+            200);
+
+        public int ArcLength
+        {
+            get => (int)GetValue(ArcLengthProperty);
+            set => SetValue(ArcLengthProperty, value);
+        }
+
         public RadialMenu()
         {
             EnableTouchEvents = true;
@@ -56,8 +78,8 @@ namespace RadialMenuSkia.Pickers
 
             var gradient = SKShader.CreateRadialGradient(
                 new SKPoint(info.Rect.MidX, info.Rect.MidY),
-                _arcLength,
-                new SKColor[]{Color.Orange.ToSKColor(), Color.DarkOrange.ToSKColor()},
+                ArcLength,
+                new SKColor[] { Color.Orange.ToSKColor(), Color.DarkOrange.ToSKColor() },
                 null,
                 SKShaderTileMode.Clamp);
 
@@ -76,8 +98,8 @@ namespace RadialMenuSkia.Pickers
                 var degrees = i * sweepingAngle;
 
                 var length = _selectedArcSegmentIndex == i
-                    ? _arcLength + selectedArcPadding
-                    : _arcLength;
+                    ? ArcLength + selectedArcPadding
+                    : ArcLength;
 
                 var startX = info.Rect.MidX + length * Math.Cos((degrees - offset) * (Math.PI / 180));
                 var startY = info.Rect.MidY + length * Math.Sin((degrees - offset) * (Math.PI / 180));
@@ -107,13 +129,13 @@ namespace RadialMenuSkia.Pickers
                     const float lengthRatio = 0.75f;
 
                     var iconX = (float)(info.Rect.MidX
-                        + (_arcLength
+                        + (ArcLength
                         * lengthRatio)
                         * Math.Cos((degrees + (sweepingAngle / 2) - offset)
                         * (Math.PI / 180)));
 
                     var iconY = (float)(info.Rect.MidY +
-                        (_arcLength * lengthRatio)
+                        (ArcLength * lengthRatio)
                         * Math.Sin((degrees + (sweepingAngle / 2) - offset)
                         * (Math.PI / 180)))
                         //vertical text alignment offset
@@ -126,14 +148,14 @@ namespace RadialMenuSkia.Pickers
             }
 
             _circlePath.Reset();
-            _circlePath.AddCircle(info.Rect.MidX, info.Rect.MidY, _diameter);
+            _circlePath.AddCircle(info.Rect.MidX, info.Rect.MidY, Diameter);
             _circlePath.Close();
 
             canvas.DrawPath(_circlePath, borderPaint);
 
             canvas.DrawCircle(
                 new SKPoint(info.Rect.MidX, info.Rect.MidY),
-                _diameter - (_borderWidth / 2), innerPaint);
+                Diameter - (_borderWidth / 2), innerPaint);
         }
 
         protected override void OnTouch(SKTouchEventArgs e)
@@ -163,9 +185,7 @@ namespace RadialMenuSkia.Pickers
             e.Handled = true;
         }
 
-        private int _diameter = 80;
         private int _borderWidth = 6;
-        private const int _arcLength = 200;
         private int _selectedArcSegmentIndex = -1;
         private SKPath _circlePath = new SKPath();
         private List<SKPath> _arcSegments = new List<SKPath>();
